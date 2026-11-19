@@ -35,6 +35,7 @@ data/generated/
 *.log
 logs/
 tmp/
+.tmp/
 .DS_Store
 Thumbs.db
 desktop.ini
