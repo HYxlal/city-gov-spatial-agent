@@ -36,13 +36,25 @@ python -m venv .venv
 .venv/Scripts/activate                   # Windows；macOS/Linux 用 source .venv/bin/activate
 pip install -e ".[dev]"
 
-pytest                                   # 56 项测试
+pytest                                   # 94 项测试
 python examples/compare_validators.py    # 两种校验实现的对照实验
+
+# 数据与端到端演示（无需数据库）
+python data/generate_synthetic_data.py --out data/generated   # 217 网格 + 24000 工单
+python examples/s1_end_to_end.py                              # 论证链全流程
 ```
 
-## 已实现（v1.3）
+## 已实现
 
-`src/argument/` 是主攻模块，已落地并通过测试：
+| 目录 | 内容 |
+| --- | --- |
+| `src/argument/` | 主攻模块：五构件模型、L1–L4 四级校验、Caveat 规则生成、What-if 复算 |
+| `sql/01_schema.sql` | 业务库：7 张表（H3 网格、事件按月分区、指标语义层），展示列与 3857 计算列分离 |
+| `sql/02_sag_tables.sql` | SAG 五表 + 3 个评测视图（证据完整率、通过率可直接 SELECT 出数） |
+| `data/generate_synthetic_data.py` | 固定种子合成数据，输出 CSV 与 manifest（含数据版本摘要） |
+| `examples/s1_end_to_end.py` | 从数据到论证图的端到端链路，含正常/方向错/编造三类用例 |
+
+`src/argument/` 各文件职责：
 
 | 文件 | 作用 |
 | --- | --- |
